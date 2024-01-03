@@ -1,0 +1,103 @@
+let oldTodoState = [];
+
+    function addTodo(todo) {
+      let parent = document.getElementById("container");
+      let todoElement = document.createElement("div");
+      let todoTitle = document.createElement("p");
+      let todoDescription = document.createElement("p");
+
+      let id = todo.id;
+
+      todoTitle.innerHTML = todo.title;
+      todoDescription.innerHTML = todo.descripton;
+
+      todoElement.appendChild(todoTitle);
+      todoElement.appendChild(todoDescription);
+
+      todoElement.setAttribute("id", id);
+
+      parent.appendChild(todoElement);
+      
+    }  
+
+    function removeTodo(todo) {
+      const element = document.getElementById(todo.id);
+      element.parentElement.removeChild(element);
+    }
+
+    function updateTodo(newTodo) {
+      const element = document.getElementById(newTodo.id);
+      element.children[0].innerHTML = newTodo.title;
+      element.children[1].innerHTML = newTodo.descripton;
+      
+    }
+
+    
+    function compareTwoElements(element1, element2) {
+      return (JSON.stringify(element1) === JSON.stringify(element2));
+    }
+
+    function updateState(newTodos) {
+      // calculate diff between new and old todos
+      // More specifically, find out what todos are - 
+      //   1. added
+      //   2. removed
+      //   3. updated
+
+      const added = [];
+      const deleted = [];
+      const updated = [];
+
+      const oldStateMap = new Map(oldTodoState.map((obj) => {return [obj.id,obj]}));
+
+      for(let i = 0; i < newTodos.length; i++) {
+        if(!oldStateMap.get(newTodos[i].id)) {
+          added.push(newTodos[i]);
+        }
+        if(!(compareTwoElements(newTodos[i], oldStateMap.get(newTodos[i].id)))) {
+          updated.push(newTodos[i]);
+        }
+      }
+
+      oldStateMap.forEach((obj) => {
+
+        let elementInNew = newTodos.find((todo) => todo.id == obj.id);
+        if(!elementInNew) {
+          deleted.push(obj);
+        }
+      })
+
+      
+
+      for(let i = 0; i < added.length; i++){
+        console.log(`Added: ${JSON.stringify(added[i])}`);
+        addTodo(added[i]);
+      }
+      
+      for(let i = 0; i < updated.length; i++){
+        console.log(`Updated: ${JSON.stringify(updated[i])}`);
+        updateTodo(updated[i]);
+      }
+      
+      for(let i = 0; i < deleted.length; i++){
+        console.log(`Deleted: ${JSON.stringify(deleted[i])}`);
+        removeTodo(deleted[i]);
+      }
+
+      // calculate these 3 arrays
+      // call addTodos, removeTodo, updateTodo functions on each of the  element.
+      oldTodoState = newTodos;
+    }
+
+    async function performAction() {
+      const responseObject = await fetch('https://sum-server.100xdevs.com/todos');
+      const data = await responseObject.json();
+      
+
+      updateState(data.todos);
+    }
+
+
+    setInterval(() => {
+      performAction();
+    }, 5000);

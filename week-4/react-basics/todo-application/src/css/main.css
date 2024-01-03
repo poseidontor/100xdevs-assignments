@@ -1,0 +1,88 @@
+body {
+    background-image: url('../static/background.jpg');
+    background-size: cover;
+    height: auto;
+    width: auto;
+}
+
+.center-div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.child-div {
+    width: 300px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.header {
+    font-size: xxx-large;
+    font-style: oblique;
+    color: #873a02;
+}
+
+.todoTitle {
+    font-size: xx-large;
+    font-style: oblique;
+    font-weight: bold;
+    color: rgb(28, 23, 23);
+}
+
+
+.todoDescription {
+    font-size: larger;
+    font-style: oblique;
+    color: rgb(28, 23, 23);;
+
+
+}
+
+label {
+    font-size: x-large;
+    font-style: italic;
+}
+
+#title {
+    height: 100;
+    width: 300;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 0.5px solid #e9cfcf;
+    box-shadow: 2px 0.5px #f5f1e6;
+    font-size: 25px;
+    font-family: cursive;
+}
+
+#description {
+    height: 100;
+    width: 300;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 0.5px solid #e9cfcf;
+    box-shadow: 2px 0.5px #f5f1e6;
+    font-size: 25px;
+    font-family: cursive;
+}
+
+button {
+    height: 35;
+    width: 100%;
+    border-radius: 10px;
+    color: #251405;
+    text-align: center;
+    font-size: large;
+    font-style: oblique;
+    background-color: #ebdecc;
+}
+
+form {
+    padding: 10px;
+}
